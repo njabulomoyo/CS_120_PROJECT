@@ -1,0 +1,11 @@
+Appointment_ID,Email,Date,Time,Doctor_ID,Status
+A001,john.doe@example.com,2025-01-15,10:00,D001,Passed
+A002,jane.smith@example.com,2025-01-16,14:00,D002,Pending
+A003,alice.johnson@example.com,2025-01-17,09:30,D003,Passed
+A004,bob.brown@example.com,2025-01-18,11:00,D004,Pending
+A005,charlie.green@example.com,2025-01-19,13:00,D001,Passed
+A006,daisy.white@example.com,2025-01-20,15:30,D002,Pending
+A007,evan.black@example.com,2025-01-21,08:00,D003,Passed
+A008,fiona.gray@example.com,2025-01-22,10:15,D004,Pending
+A009,george.blue@example.com,2025-01-23,16:45,D001,Passed
+A010,hannah.yellow@example.com,2025-01-24,09:00,D002,Pending

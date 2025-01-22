@@ -1,0 +1,11 @@
+Email,Date,Drug,Diagnosis,Doctor_ID
+john.doe@example.com,2025-01-15,Prednisolone Ophthalmic 1%,Red Eye,D001
+jane.smith@example.com,2025-01-16,Lubricant Eye Drops,Dry Eye,D002
+alice.johnson@example.com,2025-01-17,Antibiotic Eye Drops,Pink Eye,D003
+bob.brown@example.com,2025-01-18,Cyclosporine Eye Drops,Dry Eye,D004
+charlie.green@example.com,2025-01-19,Artificial Tears,Myopia,D001
+daisy.white@example.com,2025-01-20,Prednisolone Ophthalmic 1%,Red Eye,D002
+evan.black@example.com,2025-01-21,Lubricant Eye Drops,Dry Eye,D003
+fiona.gray@example.com,2025-01-22,Antibiotic Eye Drops,Pink Eye,D004
+george.blue@example.com,2025-01-23,Artificial Tears,Myopia,D001
+hannah.yellow@example.com,2025-01-24,Cyclosporine Eye Drops,Dry Eye,D002
