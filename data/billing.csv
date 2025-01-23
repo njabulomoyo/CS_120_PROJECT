@@ -1,11 +1,11 @@
-Email,Date,Details,Cost,Insurance Amount,Paid
-john.doe@example.com,2025-01-15,Consultation,100,10,True
-jane.smith@example.com,2025-01-16,Consultation,200,20,False
-alice.johnson@example.com,2025-01-17,Eye Checkup,150,15,True
-bob.brown@example.com,2025-01-18,Prescription Review,250,25,False
-charlie.green@example.com,2025-01-19,Consultation,180,18,True
-daisy.white@example.com,2025-01-20,Eye Checkup,120,12,False
-evan.black@example.com,2025-01-21,Prescription Review,220,22,True
-fiona.gray@example.com,2025-01-22,Consultation,140,14,False
-george.blue@example.com,2025-01-23,Eye Checkup,160,16,True
-hannah.yellow@example.com,2025-01-24,Consultation,130,13,False
+Email,Date,Details,Cost,Insurance Amount
+john.doe@example.com,2025-01-15,Consultation,100,10
+jane.smith@example.com,2025-01-16,Consultation,200,20
+alice.johnson@example.com,2025-01-17,Eye Checkup,150,15
+bob.brown@example.com,2025-01-18,Prescription Review,250,25
+charlie.green@example.com,2025-01-19,Consultation,180,18
+daisy.white@example.com,2025-01-20,Eye Checkup,120,12
+evan.black@example.com,2025-01-21,Prescription Review,220,22
+fiona.gray@example.com,2025-01-22,Consultation,140,14
+george.blue@example.com,2025-01-23,Eye Checkup,160,16
+hannah.yellow@example.com,2025-01-24,Consultation,130,13

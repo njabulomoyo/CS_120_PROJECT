@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prescriptions Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <h1>EyeCare</h1>
+      </div>
+    </header>
+    <main>
+      <aside class="sidebar">
+        <p>Welcome, <b>{{ user['First_Name'] }}</b></p>
+        <ul>
+          <li><a href="{{ url_for('main_dashboard') }}">Main Menu</a></li>
+          <li><a href="{{ url_for('account') }}"><span>👤</span> Account</a></li>
+          <li><a href="{{ url_for('billing') }}"><span>💳</span> Billing</a></li>
+          <li><a href="{{ url_for('prescriptions') }}"><span>🔒</span> Prescriptions</a></li>
+          <li><a href="{{ url_for('appointments') }}"><span>📅</span> Appointments</a></li>
+
+       </ul>
+      </aside>
+      <section class="content">
+        <h2>Prescriptions</h2>
+        <div class="prescription-table">
+          <h3>Current Prescriptions</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Date of Issue</th>
+                <th>Prescription Name</th>
+                <th>Method of Usage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>11/01/2024</td>
+                <td>5mm of Benzene Ethane</td>
+                <td>Take twice daily</td>
+              </tr>
+              <tr>
+                <td>11/01/2024</td>
+                <td>10mm of Ezanoic</td>
+                <td>Take three times daily</td>
+              </tr>
+              <tr>
+                <td>11/02/2024</td>
+                <td>Eye Drops</td>
+                <td>Apply every 3 hours</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="prescription-table">
+          <h3>Previous Prescriptions</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Date of Issue</th>
+                <th>Prescription Name</th>
+                <th>Method of Usage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>09/15/2024</td>
+                <td>5mm of Benzene Ethane</td>
+                <td>Take twice daily</td>
+              </tr>
+              <tr>
+                <td>09/20/2024</td>
+                <td>10mm of Ezanoic</td>
+                <td>Take three times daily</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2024 Dube Production</p>
+      <nav>
+        <a href="#">Contact Us</a>
+        <a href="#">Company</a>
+        <a href="#">Support</a>
+        <a href="#">Legal</a>
+      </nav>
+    </footer>
+  </div>
+</body>
+</html>

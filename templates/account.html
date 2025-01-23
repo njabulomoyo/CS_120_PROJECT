@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <h1>EyeCare</h1>
+      </div>
+    </header>
+    <main>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          {% for message in messages %}
+              <div class="alert alert-info">{{ message }}</div>
+          {% endfor %}
+      {% endif %}
+      {% endwith %}
+      <aside class="sidebar">
+        <p>Welcome, <b>{{ user['First_Name'] }}</b></p>
+        <ul>
+          <li><a href="{{ url_for('main_dashboard') }}">Main Menu</a></li>
+          <li><a href="{{ url_for('account') }}"><span>👤</span> Account</a></li>
+          <li><a href="{{ url_for('billing') }}"><span>💳</span> Billing</a></li>
+          <li><a href="{{ url_for('prescriptions') }}"><span>🔒</span> Prescriptions</a></li>
+          <li><a href="{{ url_for('appointments') }}"><span>📅</span> Appointments</a></li>
+        </ul>
+      </aside>
+      <section class="content">
+        <h2>Account Information</h2>
+        <div class="account-info">
+          <div class="info-item">
+            <strong>Name:</strong>
+            <p>{{ user['Name'] }}</p>
+          </div>
+          <div class="info-item">
+            <strong>Email:</strong>
+            <p>{{ user['Email'] }} </p>
+          </div>
+          <div class="info-item">
+            <strong>Address:</strong>
+            <p>{{ user['Address'] }}</p>
+          </div>
+          <div class="info-item">
+            <strong>DOB:</strong>
+            <p>{{ user['DOB'] }}</p>
+          </div>
+          
+          <div class="info-item">
+            <strong>Sex:</strong>
+            <p>{{ user['Sex'] }}</p>
+          </div>
+          <div class="info-item">
+            <strong>Insurance:</strong>
+            <p>{{ user['Insurance'] }}</p>
+          </div>
+        </div>
+        <nav class="edit-profile">
+          <div class="position-sticky">
+            <hr>
+            <div class="mb-3">
+              <button class="btn btn-link text-decoration-none" data-bs-toggle="collapse" data-bs-target="#profileForm">
+                Edit Profile
+              </button>
+            </div>
+            <div class="mb-3">
+              <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+            </div>
+    
+            <!-- Profile Edit Form -->
+            <div class="collapse" id="profileForm">
+              <form method="POST" action="{{ url_for('update_profile') }}">
+                <div class="mb-3">
+                  <label for="edit_name" class="form-label">First Name</label>
+                  <input type="text" class="form-control" id="edit_first_name" name="first_name"
+                         value="{{ user['Name'] }}" required>
+                </div>
+                <div class="mb-3">
+                  <label for="edit_mobile" class="form-label">Mobile</label>
+                  <input type="tel" class="form-control" id="edit_mobile" name="mobile"
+                         value="{{ user['Number'] }}" required>
+                </div>
+                <div class="mb-3">
+                  <label for="edit_address" class="form-label">Address</label>
+                  <textarea class="form-control" id="edit_address" name="address"
+                            rows="3" required>{{ user['Address'] }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </section>
+  
+    </main>
+    <footer>
+      <p>&copy; 2024 Dube Production</p>
+      <nav>
+        <a href="#">Contact Us</a>
+        <a href="#">Company</a>
+        <a href="#">Support</a>
+        <a href="#">Legal</a>
+      </nav>
+    </footer>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

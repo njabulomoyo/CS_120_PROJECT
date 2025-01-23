@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EyeCare Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <h1>EyeCare</h1>
+      </div>
+    </header>
+    <main>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          {% for message in messages %}
+              <div class="alert alert-info">{{ message }}</div>
+          {% endfor %}
+      {% endif %}
+      {% endwith %}
+      <aside class="sidebar">
+        <p>Welcome, <b> {{ user['Name'] }}</b></p>
+        <ul>
+          <li><a href="{{ url_for('main_dashboard') }}">Main Menu</a></li>
+          <li><a href="{{ url_for('account') }}"><span>👤</span> Account</a></li>
+          <li><a href="{{ url_for('billing') }}"><span>💳</span> Billing</a></li>
+          <li><a href="{{ url_for('prescriptions') }}"><span>🔒</span> Prescriptions</a></li>
+          <li><a href="{{ url_for('appointments') }}"><span>📅</span> Appointments</a></li>
+      </ul>
+      </aside>
+      <section class="content">
+        <div class="appointments">
+          <div class="upcoming">
+            <h2>Upcoming Appointments</h2>
+            {% if appointments %}
+              {% for appointment in appointments %}
+                <p>
+                  <strong>{{appointment.Doctor}}</strong><br>
+                  at {{appointment.Time}}
+                </p>
+              {% endfor %}
+            {% else %}
+                <p>No appointments scheduled.</p>
+            {% endif %}
+          </div>
+          <div class="previous">
+            <h2>Previous Appointments</h2>
+            <p>No information available at the moment.</p>
+          </div>
+        </div>
+  
+        <div class="prescriptions">
+          <h2>Prescriptions</h2>
+          <div class="prescription-item">
+            <p><strong>5mm of benzene ethane</strong><br>Times to take per day: 2</p>
+          </div>
+          <div class="prescription-item">
+            <p><strong>10mm of ezanoic</strong><br>Times to take per day: 3</p>
+          </div>
+          <div class="prescription-item">
+            <p><strong>Eye drops</strong><br>After every 3 hrs</p>
+          </div>
+        </div>
+  
+        <div class="book">
+          <h3 class="mt-4">Book New Appointment</h3>
+    <form method="POST" action="{{ url_for('book_appointment') }}" class="row g-3">
+      <div class="col-md-4">
+        <label for="doctor" class="form-label">Select Doctor</label>
+        <select class="form-select" id="doctor" name="doctor" required>
+          <option value="">Choose...</option>
+          {% for doctor in doctors %}
+            <option value="{{ doctor['name'] }}">{{ doctor['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col-md-4">
+        <label for="appointment_date" class="form-label">Select Date</label>
+        <input type="date" class="form-control" id="appointment_date" name="appointment_date" required disabled>
+        <div class="invalid-feedback">Please select a valid weekday within the next 30 days.</div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="time_slot" class="form-label">Select Time</label>
+        <select class="form-select" id="time_slot" name="time_slot" required disabled>
+          <option value="">Choose date first</option>
+        </select>
+      </div>
+
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary" id="book-button" disabled>Book Appointment</button>
+      </div>
+    </form>
+
+      </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 Dube Production</p>
+    <nav>
+      <a href="#">Contact Us</a>
+      <a href="#">Company</a>
+      <a href="#">Support</a>
+      <a href="#">Legal</a>
+    </nav>
+  </footer>
+  </div>
+
+<script>
+    // DOM elements
+    const doctorSelect = document.getElementById('doctor');
+    const dateInput = document.getElementById('appointment_date');
+    const timeSlotSelect = document.getElementById('time_slot');
+    const bookButton = document.getElementById('book-button');
+  
+    // Date constraints
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 30);
+  
+    // Set up min and max dates for date input
+    dateInput.min = tomorrow.toISOString().split('T')[0];
+    dateInput.max = maxDate.toISOString().split('T')[0];
+  
+    // Enable/disable date input based on doctor selection
+    doctorSelect.addEventListener('change', function () {
+      if (doctorSelect.value) {
+        dateInput.disabled = false;
+      } else {
+        dateInput.disabled = true;
+        dateInput.value = '';
+        timeSlotSelect.disabled = true;
+        timeSlotSelect.innerHTML = '<option value="">Choose date first</option>';
+        bookButton.disabled = true;
+      }
+    });
+  
+    // Handle date change and fetch available time slots
+    dateInput.addEventListener('change', function () {
+      const doctor = doctorSelect.value;
+      const selectedDate = new Date(dateInput.value);
+  
+      // Validate that the date is a weekday
+      if (selectedDate.getDay() === 0 || selectedDate.getDay() === 6) {
+        dateInput.classList.add('is-invalid');
+        timeSlotSelect.disabled = true;
+        timeSlotSelect.innerHTML = '<option value="">Choose a valid date first</option>';
+        bookButton.disabled = true;
+        return;
+      }
+  
+      // Valid date: enable time slot dropdown and fetch slots
+      dateInput.classList.remove('is-invalid');
+      timeSlotSelect.disabled = false;
+      timeSlotSelect.innerHTML = '<option value="">Loading slots...</option>';
+  
+      // Fetch available slots from the server
+      fetch(`/get_available_slots/${doctor}/${dateInput.value}`)
+        .then(response => response.json())
+        .then(data => {
+          timeSlotSelect.innerHTML = '<option value="">Choose time...</option>';
+          data.slots.forEach(slot => {
+            const option = document.createElement('option');
+            option.value = slot;
+            option.textContent = slot;
+            timeSlotSelect.appendChild(option);
+          });
+  
+          // Enable the Book button if slots are available
+          bookButton.disabled = data.slots.length === 0;
+        })
+        .catch(error => {
+          console.error('Error fetching slots:', error);
+          timeSlotSelect.innerHTML = '<option value="">Error loading slots</option>';
+          bookButton.disabled = true;
+        });
+    });
+  
+    // Enable the Book button when a valid time slot is selected
+    timeSlotSelect.addEventListener('change', function () {
+      bookButton.disabled = !timeSlotSelect.value;
+    });
+</script>
+  
+</body>
+</html
+
+
+ 
+
