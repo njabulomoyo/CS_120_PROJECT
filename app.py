@@ -49,26 +49,41 @@ def index():
 def signup():
     if request.method == 'POST':
         email = request.form['email'].strip()
- 
+
+        # Check if email already exists
         if get_patient(email, PATIENTS_CSV):
             flash('Email already registered')
             return redirect(url_for('signup'))
 
-        else:
-            details={ "Name":f"{request.form['first_name'].strip()} {request.form['last_name'].strip()}",
-                      "Number": request.form['mobile'].strip(), 
-                      "Password": request.form['password'].strip(),
-                      "Address" : request.form['address'].strip(),
-                      "DOB": "TBD",
-                      "Sex": "TBD",
-                      "Insurance": "TBD"}
-            add_patient(email, details, PATIENTS_CSV)
 
-            logger.info(f"New user registered: {email}")
-            flash('Registration successful! Please login.')
-            return redirect(url_for('login'))
-  
+        # Prepare patient details dictionary
+        details = {
+            "Name": f"{request.form['first_name'].strip()} {request.form['last_name'].strip()}",
+            "Number": request.form['mobile'].strip(),
+            "Password": request.form['password'].strip(),
+            "AddressLine1": request.form['address_line1'].strip(),
+            "AddressLine2": request.form.get('address_line2', '').strip(),
+            "DOB": "TBD",
+            "Sex": "TBD",
+            "HasInsurance": str(request.form.get('has_insurance') == 'on').lower(),
+            "Insurance": request.form.get('insurance_provider', '').strip() if request.form.get('has_insurance') == 'on' else "",
+            "Country": request.form.get('country', '').strip(),
+            "State": request.form.get('state', '').strip(),
+            "City": request.form.get('city', '').strip(),
+            "ZipCode": request.form.get('zip_code', '').strip()
+        }
+
+
+        # Add patient to CSV
+        add_patient(email, details, PATIENTS_CSV)
+
+
+        logger.info(f"New user registered: {email}")
+        flash('Registration successful! Please login.')
+        return redirect(url_for('login'))
+
     return render_template('signup.html')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -168,7 +183,7 @@ def prescriptions():
                              )
     return redirect(url_for('logout'))
 
-  
+
 
 @app.route('/appointments')
 @role_required('Patient')
