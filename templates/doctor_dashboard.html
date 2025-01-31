@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EyeCare Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <h1>EyeCare</h1>
+      </div>
+    </header>
+    <main>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          {% for message in messages %}
+              <div class="alert alert-info">{{ message }}</div>
+          {% endfor %}
+      {% endif %}
+      {% endwith %}
+      <aside class="sidebar">
+        <p>Welcome, <b> {{ user['Name'] }}</b></p>
+        <ul>
+      </ul>
+      </aside>
+      <section class="content">
+        <div class="appointments">
+          <div class="upcoming">
+            <h2>Upcoming Appointments</h2>
+            {% if appointments %}
+              {% for appointment in appointments %}
+                <p>
+                  <strong>{{appointment.Doctor}}</strong><br>
+                  at {{appointment.Time}}
+                </p>
+              {% endfor %}
+            {% else %}
+                <p>No appointments scheduled.</p>
+            {% endif %}
+          </div>
+          <div class="previous">
+            <h2>Previous Appointments</h2>
+            <p>No information available at the moment.</p>
+          </div>
+        </div>
+  
+        <div class="prescriptions">
+          <h2>Prescriptions Given</h2>
+          <div class="prescription-item">
+            <p><strong>Name </strong><br>5mm of benzene ethane taken 2 times per day</p>
+          </div>
+          <div class="prescription-item">
+            <p><strong>Name</strong><br> 10mm of ezanoic taken 3 times per day</p>
+          </div>
+     
+        </div>
+  
+        <div class="book">
+          <h3 class="mt-4">Confirm Passed Appotintment Appointment</h3>
+    <form method="POST" class="row g-3">
+      <div class="col-md-4">
+        <label for="doctor" class="form-label">Select Patient</label>
+        <select class="form-select" id="doctor" name="doctor" required>
+          <option value=""></option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="doctor" class="form-label">Select Appointment</label>
+        <select class="form-select" id="doctor" name="doctor" required>
+          <option value="">Select appointment date and time</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="doctor" class="form-label">Select Prescription</label>
+        <select class="form-select" id="doctor" name="doctor" required>
+          <option value="">Select Any prescriptions Given</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary" id="book-button" disabled>Submit</button>
+      </div>
+    </form>
+
+      </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 Dube Production</p>
+    <nav>
+      <a href="#">Contact Us</a>
+      <a href="#">Company</a>
+      <a href="#">Support</a>
+      <a href="#">Legal</a>
+    </nav>
+  </footer>
+  </div>
+  
+</body>
+</html
+
+
+ 
+

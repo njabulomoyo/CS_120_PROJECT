@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
-from modules import get_timeslots, get_appointments, get_billings, get_patient, update_patient 
-from modules import get_available_dates, get_prescriptions, add_patient, get_doctors, is_time_slot_available
+from modules import get_timeslots, get_appointments, get_billings, get_patient, update_patient, get_doctor, view_doctor_appointments
+from modules import get_available_dates, get_prescriptions, add_patient, get_doctors, is_time_slot_available, view_doctor_prescriptions
 from functools import wraps
 import csv
 import os
@@ -24,14 +24,19 @@ BILLING_CSV = os.path.join(DATA_DIR, 'billing.csv')
 PRESCRIPTIONS_CSV = os.path.join(DATA_DIR, 'prescriptions.csv')
 
 # Login required decorator
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'user_email' not in session:
-            flash('Please login first.')
-            return redirect(url_for('login'))
-        return f(*args, **kwargs)
-    return decorated_function
+def role_required(role):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if not session:
+                flash('Please login first.')
+                return redirect(url_for('login'))
+            if session['role'] != role:
+                flash('You are not authorized to be on this page.')
+                return redirect(url_for('login'))
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
 
 # Routes
 @app.route('/')
@@ -76,6 +81,8 @@ def login():
             user = get_patient(email, PATIENTS_CSV)
             if user and user['Password'] == password:
                 session['user_email'] = email
+                session['role']= 'Patient'
+                session['Name']= user['Name']
                 logger.info(f"Successful login for user: {email}")
                 flash('Logged in successfully!')
                 return redirect(url_for('main_dashboard'))
@@ -98,16 +105,16 @@ def logout():
 
 
 @app.route('/main_dashboard')
-@login_required
+@role_required('Patient')
 def main_dashboard():
-    user = get_patient(session['user_email'], PATIENTS_CSV)
-    if user:
+
+    if session:
         appointments = get_appointments(session['user_email'], APPOINTMENTS_CSV)
         prescriptions= get_prescriptions(session['user_email'], PRESCRIPTIONS_CSV)
         doctors=get_doctors(DOCTORS_CSV)
         timeslots= get_timeslots()
         return render_template('main_dashboard.html',
-                             user=user,
+                             user=session,
                              appointments=appointments,
                              prescriptions=prescriptions,
                              doctors=doctors,
@@ -117,7 +124,7 @@ def main_dashboard():
 
 
 @app.route('/account')
-@login_required
+@role_required('Patient')
 def account():
     user= get_patient(session["user_email"], PATIENTS_CSV)
     if user:
@@ -126,7 +133,7 @@ def account():
     return redirect(url_for('logout'))
 
 @app.route('/update_profile', methods=['POST'])
-@login_required
+@role_required('Patient')
 def update_profile():
     details = {
         'Name': f"{request.form['first_name'].strip()} {request.form['last_name'].strip()}",
@@ -142,45 +149,41 @@ def update_profile():
     return redirect(url_for('account'))
 
 @app.route('/billing')
-@login_required
+@role_required('Patient')
 def billing():
-    user= get_patient(session["user_email"], PATIENTS_CSV)
-    if user:
+    if session:
         billing = get_billings(session['user_email'], BILLING_CSV)
         return render_template('billing.html',
-                             user=user, billing=billing)
+                             user=session, billing=billing)
     return redirect(url_for('logout'))
 
 
 @app.route('/prescriptions')
-@login_required
+@role_required('Patient')
 def prescriptions():
-    user = get_patient(session['user_email'],  PATIENTS_CSV)
-    prescriptions=get_prescriptions(session['user_email'], PRESCRIPTIONS_CSV)
-    if user:
+    if session:
+        prescriptions=get_prescriptions(session['user_email'], PRESCRIPTIONS_CSV)
         return render_template('prescriptions.html',
-                             user=user, prescriptions=prescriptions
+                             user=session, prescriptions=prescriptions
                              )
     return redirect(url_for('logout'))
 
   
 
 @app.route('/appointments')
-@login_required
+@role_required('Patient')
 def appointments():
-    user = get_patient(session['user_email'],  PATIENTS_CSV)
-    
-    if user:
+    if session:
         appointments = get_appointments(session['user_email'], APPOINTMENTS_CSV)
         return render_template('appointments.html',
-                             user=user,
+                             user=session,
                              appointments=appointments,)
     return redirect(url_for('logout'))
 
 
 
 @app.route('/book_appointment', methods=['POST'])
-@login_required
+@role_required('Patient')
 def book_appointment():
     #TODO
     return redirect(url_for('main_dashboard'))
@@ -189,4 +192,42 @@ def book_appointment():
 def available_slots(doctor, date):
     slots = [slot for slot in get_timeslots() if is_time_slot_available(doctor,date, slot )]
     return jsonify({'slots': slots})
-app.run()
+
+
+
+@app.route('/doctor/login', methods=['GET','POST'])
+def doctor_login():
+    if request.method == 'POST':
+        id = request.form['doctor_id'].strip()
+        password = request.form['password'].strip()
+        try:
+            user = get_doctor(id, DOCTORS_CSV)
+            if user and user['Password'] == password:
+                session['doctor_id'] = id
+                session['role']= 'Doctor'
+                session['name']= user['Name']
+                logger.info(f"Successful login for user: {id}")
+                flash('Logged in successfully!')
+                return redirect(url_for('doctor_dashboard'))
+            else:
+                logger.warning(f"Invalid credentials for email: {id}")
+                flash('Invalid ID or password')
+        except Exception as e:
+            logger.error(f"Login error: {e}")
+            flash('An error occurred during login. Please try again.')
+
+    return render_template('doctor_login.html')
+
+@app.route('/doctor/dashboard')
+@role_required('Doctor')
+def doctor_dashboard():
+    if session:
+        appointments = view_doctor_appointments(session['doctor_id'], APPOINTMENTS_CSV)
+        prescriptions= view_doctor_prescriptions(session['doctor_id'], PRESCRIPTIONS_CSV)
+        return render_template('doctor_dashboard.html',
+                             user=session,
+                             appointments=appointments,
+                             prescriptions=prescriptions)
+    return redirect(url_for('logout'))
+
+app.run(debug=True)

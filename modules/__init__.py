@@ -1,2 +1,2 @@
-from .main import get_patient, add_patient, get_appointments, get_billings, update_patient,  get_prescriptions, get_doctors
+from .main import get_patient, add_patient, get_appointments, get_billings, update_patient,  get_prescriptions, get_doctors, get_doctor, view_doctor_appointments, view_doctor_prescriptions
 from .helper import get_timeslots, get_available_dates, is_time_slot_available

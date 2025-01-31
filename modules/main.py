@@ -191,5 +191,32 @@ def get_doctors(doctors_csv):
         return []
 
 
+def get_doctor(id, doctor_csv):
+    try:
+        with open(doctor_csv, mode='r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if row['Doctor_ID'] == id:
+                    return {
+                        "Name": row["Name"],
+                        "Password": row["Password"]
+                    }
+        return None
+    except FileNotFoundError:
+        print(f"Error: File not found.")
+        return None
+    except KeyError as e:
+        print(f"Error: Missing expected column in the CSV file: {e}")
+        return None
 
-#TODO add_billing, add_prescription, 
+
+def view_doctor_appointments(id, appointments_csv):
+    #TODO
+    return None
+
+def view_doctor_prescriptions(id, prescriptions_csv):
+    #TODO
+    return None
+
+
+#TODO add_billing, add_prescription, get_doctor_appointments, get_doctor prescriptions
