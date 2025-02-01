@@ -1,11 +1,13 @@
 import csv
 
-def get_patient(email, user_csv):
+def get_patient(email, user_csv, doctors_csv):
     try:
-        with open(user_csv, mode='r') as file:
+        with open(user_csv, mode='r', encoding="utf-8") as file:
             reader = csv.DictReader(file)
             for row in reader:
+                print(row["Email"] == email, email, row["Email"])
                 if row['Email'] == email:
+                    print(row["Password"])
                     return {
                         "Name": row["Name"],
                         "Email": row["Email"],
@@ -21,7 +23,23 @@ def get_patient(email, user_csv):
                         "Country": row["Country"],
                         "State": row["State"],
                         "City": row["City"],
-                        "ZipCode": row["ZipCode"]
+                        "ZipCode": row["ZipCode"],
+                        "role":"Patient"
+                    }
+        with open(doctors_csv, mode='r', encoding="utf-8") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                # print(row["Email"] == email, email, row["Email"])
+                if row['Email'] == email:
+                    print(row["Password"])
+                    return {
+                        "Name": row["Name"],
+                        "Email": row["Email"],
+                        # "Address": f"{row['AddressLine1']}, {row['AddressLine2']}".strip(', '),
+                        "Sex": row["Sex"],
+                        "Password": row["Password"],
+                        "role": "Doctor",
+                         "doctor_id": row["Doctor_ID"]
                     }
         return None
     except FileNotFoundError:
@@ -210,13 +228,8 @@ def get_doctors(doctors_csv):
     try:
         with open(doctors_csv, mode='r') as file:
             reader = csv.DictReader(file)
-
             for row in reader:
-                doctor= {"name": row.get('Name'),
-                          "sex": row.get("Sex"),
-                }
-                if doctor:
-                    doctors.append(doctor)
+               doctors.append(row)
         return doctors
 
     except FileNotFoundError:
@@ -249,13 +262,47 @@ def get_doctor(id, doctor_csv):
         return None
 
 
-def view_doctor_appointments(id, appointments_csv):
-    #TODO
-    return None
+def view_doctor_appointments(doc_id, appointments_csv):
+    try:
+        with open(appointments_csv, mode='r', encoding="utf-8") as file:
+            reader = csv.DictReader(file)
+            appointments = []
+            for row in reader:
+                if row['Doctor_ID'] == doc_id:
+                    appointments.append(row)
+            return appointments
+    except FileNotFoundError:
+        print(f"Error: File not found.")
+        return None
+    except KeyError as e:
+        print(f"Error: Missing expected column in the CSV file: {e}")
+        return None
 
 def view_doctor_prescriptions(id, prescriptions_csv):
     #TODO
     return None
 
 
+def get_patients(patients_csv):
+    try:
+        with open(patients_csv, mode='r', encoding="utf-8") as file:
+            reader = csv.DictReader(file)
+            patients = []
+            for row in reader:
+                patients.append(row)
+        return patients
+    except FileNotFoundError:
+        print(f"Error: File not found.")
+        return None
+    except KeyError as e:
+        print(f"Error: Missing expected column in the CSV file: {e}")
+        return None
+
+def append_to_file(file_path, text):
+    try:
+        with open(file_path, 'a') as file:
+            file.write(text + '\n')
+        print(f"Successfully appended to {file_path}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 #TODO add_billing, add_prescription, get_doctor_appointments, get_doctor prescriptions

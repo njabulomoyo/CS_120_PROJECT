@@ -1,0 +1,254 @@
+<!--templates/modules/section_sidebar.html-->
+
+<div class="section section--content" id="content">
+		<header class="content-header">
+
+			<div class="sidebar-resize"></div>
+			<div class="mobile-menu"><div class="st-burger-icon st-burger-icon--medium"><span></span></div></div>
+
+			<div class="content-header__user content-header__dropdown">
+			    <div class="content-header__user-avatar content-header__dropdown-activate" data-dropdown="userdropdown">
+					<div class="content-header__user-thumb"><img src="images/avatar-2.jpg" alt="" title=""/></div>
+					<span class="content-header__user-name">Nathalie Roberts</span>
+			    </div>
+				<nav class="dropdown-menu dropdown-menu--header dropdown-menu--user-menu " id="userdropdown">
+				<h3 class="dropdown-menu__subtitle">User menu</h3>
+				<ul>
+				    <li><a href="#">My profile</a></li>
+				    <li><a href="#">Activity</a></li>
+				    <li><a href="#">Switch account</a></li>
+				    <li><a href="#">Support</a></li>
+				    <li class="logout"><a href="#" class="button button--general button--red-border">Logout</a></li>
+				</ul>
+				</nav>
+			</div>
+
+			<div class="content-header__notifications content-header__dropdown">
+			    <div class="content-header__notifications-icon content-header__icon content-header__dropdown-activate" data-dropdown="notificationsdropdown">
+					<img src="images/icons/icons-24-gray/notifications.png" alt="" title=""/>
+					<span class="content-header__icon-bubble">6</span>
+				</div>
+				<nav class="dropdown-menu dropdown-menu--header dropdown-menu--notifications-menu" id="notificationsdropdown">
+				<h3 class="dropdown-menu__subtitle">You have <strong>6</strong> notifications</h3>
+				<ul>
+					<li class="d-flex justify-sb"><span class="important">IMPORTANT</span>Michael D. kidney surgery <b class="task-time">today</b></li>
+					<li class="d-flex justify-sb"><span class="important">IMPORTANT</span>FLU Alert report generated <b class="task-time">today</b></li>
+
+					<li class="d-flex justify-sb"><span>Meeting with <strong>Dr. Joshua</strong> </span> <b class="task-time">tomorrow</b></li>
+					<li class="d-flex justify-sb"><span>Remember to create prescriptions for <strong>Alexander P.</strong></span> <b class="task-time">tomorrow</b></li>
+					<li class="d-flex justify-sb"><span><strong>Jada Sacks</strong> canceled the appointment at Cardiology, Dr. Michael V. </span> <b class="task-time">24 jan, 19</b></li>
+					<li class="d-flex justify-sb"><span>Sarah D. registered as new patient of <strong>Dr. George</strong> at Dermatology </span> <b class="task-time">28 jan, 19</b></li>
+					<li class="view-all"><a href="#" class="button button--general button--blue-border">View all</a></li>
+				</ul>
+				</nav>
+			</div>
+
+			<div class="content-header__quicklinks content-header__dropdown">
+			        <div class="content-header__quicklinks-icon content-header__icon content-header__dropdown-activate" data-dropdown="quicklinksdropdown">
+					<img src="images/icons/icons-24-gray/submenu.png" alt="" title=""/>
+				</div>
+				<nav class="dropdown-menu dropdown-menu--header dropdown-menu--quicklinks-menu" id="quicklinksdropdown">
+				<h3 class="dropdown-menu__subtitle">Quick links</h3>
+				<ul>
+				        <li><a href="#">Add new doctor</a></li>
+					<li><a href="#">Add new patient</a></li>
+					<li><a href="#">Generate reports</a></li>
+				</ul>
+				</nav>
+			</div>
+
+			<div class="mobile-submenu"></div>
+
+			<nav class="content-header__menu">
+				<ul>
+					<li class="user selected"><a href="dashboard__patients-add.html">Add new patient</a></li>
+					<li class="prescription modal-toggle" data-openpopup="prescription"><a href="#">Write a prescription</a></li>
+					<li class="reports modal-toggle" data-openpopup="reports"><a href="#">Generate report</a></li>
+				</ul>
+			</nav>
+
+		</header>
+		<div class="content-subheader">
+
+			<div class="content-subheader__titles">
+					<h2 class="content-subheader__title">Tables</h2>
+					<nav class="content-subheader__breadcrumb-menu">
+							<ul>
+								<li><a href="dashboard.html">Dashboard</a></li>
+							</ul>
+					</nav>
+			</div>
+
+
+			<div class="content-subheader__options">
+
+					<div class="content-subheader__search">
+						<form>
+							<input type="text" class="subheader-search__input" id="" name="" value="" placeholder="Search patient" />
+							<input type="submit" class="subheader-search__submit" value="Search" />
+						</form>
+					</div>
+
+					<div class="content-subheader__dropdown">
+						<span class="content-subheader__more show-more show-more--select show-more--select-gray has-dropdown" data-dropdown="moreoptions">Filter Options</span>
+						<nav class="dropdown-menu dropdown-menu--content dropdown-menu--subheader" id="moreoptions">
+							<ul>
+								<li><a href="#">By Date</a></li>
+								<li><a href="#">By Name</a></li>
+								<li><a href="#">By Date of birth</a></li>
+								<li><a href="#">+ Add filter</a></li>
+							</ul>
+						</nav>
+					</div>
+
+			</div>
+
+		</div>
+
+
+
+		{% include 'modules/patients_table.html' %}
+
+
+		<div class="grid grid--margin mb0">
+
+		        <div class="grid__row">
+				<div class="grid__col grid__col--12 grid__col--margin grid__col--padding bg-white mb0">
+					<div class="table table--15">
+						<div class="table__header">
+							<div class="table__row">
+								<div class="table__cell"></div>
+								<div class="table__cell">NAME</div>
+								<div class="table__cell">EMAIL</div>
+								<div class="table__cell">ADDRESS</div>
+								<div class="table__cell"></div>
+							</div>
+						</div>
+						<div class="table__body">
+							<div class="table__row">
+								<div class="table__cell"><div class="avatar-thumb"><img src="images/avatar-1.jpg" alt="" title=""/></div></div>
+								<div class="table__cell">Billy Ross</div>
+								<div class="table__cell">julia@henderson.com</div>
+								<div class="table__cell">Paris, France</div>
+								<div class="table__cell">
+									<span class="show-more show-more--ellipsis has-dropdown" data-dropdown="dropd5"></span>
+									<nav class="dropdown-menu dropdown-menu--content dropdown-menu--table" id="dropd5">
+										<ul>
+											<li><a href="dashboard__patient-profile.html">View Profile</a></li>
+											<li><a href="#">Contact</a></li>
+											<li><a href="#">Delete</a></li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+							<div class="table__row">
+								<div class="table__cell"><div class="avatar-thumb"><img src="images/avatar-6.jpg" alt="" title=""/></div></div>
+								<div class="table__cell">Sienna Butler</div>
+								<div class="table__cell">sienna@butler.com</div>
+								<div class="table__cell">Toronto, Canada</div>
+								<div class="table__cell">
+									<span class="show-more show-more--ellipsis has-dropdown" data-dropdown="dropd6"></span>
+									<nav class="dropdown-menu dropdown-menu--content dropdown-menu--table" id="dropd6">
+										<ul>
+											<li><a href="dashboard__patient-profile.html">View Profile</a></li>
+											<li><a href="#">Contact</a></li>
+											<li><a href="#">Delete</a></li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+
+							<div class="table__row">
+								<div class="table__cell"><div class="avatar-thumb"><img src="images/avatar-7.jpg" alt="" title=""/></div></div>
+								<div class="table__cell">Robert Davis</div>
+								<div class="table__cell">robert@davis.com</div>
+								<div class="table__cell">Berlin, Germany</div>
+								<div class="table__cell">
+									<span class="show-more show-more--ellipsis has-dropdown" data-dropdown="dropd7"></span>
+									<nav class="dropdown-menu dropdown-menu--content dropdown-menu--table" id="dropd7">
+										<ul>
+											<li><a href="dashboard__patient-profile.html">View Profile</a></li>
+											<li><a href="#">Contact</a></li>
+											<li><a href="#">Delete</a></li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+
+
+						</div>
+
+					</div>
+				</div>
+				<div class="grid__col grid__col--12 grid__col--margin grid__col--padding bg-white mb0">
+					<div class="table table--14">
+						<div class="table__header">
+							<div class="table__row">
+								<div class="table__cell"></div>
+								<div class="table__cell">NAME</div>
+								<div class="table__cell">EMAIL</div>
+								<div class="table__cell"></div>
+							</div>
+						</div>
+						<div class="table__body">
+							<div class="table__row">
+								<div class="table__cell"><div class="avatar-thumb"><img src="images/avatar-5.jpg" alt="" title=""/></div></div>
+								<div class="table__cell">Julia Henderson</div>
+								<div class="table__cell">julia@henderson.com</div>
+
+								<div class="table__cell">
+									<span class="show-more show-more--ellipsis has-dropdown" data-dropdown="dropd8"></span>
+									<nav class="dropdown-menu dropdown-menu--content dropdown-menu--table" id="dropd8">
+										<ul>
+											<li><a href="dashboard__patient-profile.html">View Profile</a></li>
+											<li><a href="#">Contact</a></li>
+											<li><a href="#">Delete</a></li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+							<div class="table__row">
+								<div class="table__cell"><div class="avatar-thumb"><img src="images/avatar-2.jpg" alt="" title=""/></div></div>
+								<div class="table__cell">Sienna Butler</div>
+								<div class="table__cell">sienna@butler.com</div>
+
+								<div class="table__cell">
+									<span class="show-more show-more--ellipsis has-dropdown" data-dropdown="dropd9"></span>
+									<nav class="dropdown-menu dropdown-menu--content dropdown-menu--table" id="dropd9">
+										<ul>
+											<li><a href="dashboard__patient-profile.html">View Profile</a></li>
+											<li><a href="#">Contact</a></li>
+											<li><a href="#">Delete</a></li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+
+							<div class="table__row">
+								<div class="table__cell"><div class="avatar-thumb"><img src="images/avatar-3.jpg" alt="" title=""/></div></div>
+								<div class="table__cell">Robert Davis</div>
+								<div class="table__cell">robert@davis.com</div>
+
+								<div class="table__cell">
+									<span class="show-more show-more--ellipsis has-dropdown" data-dropdown="dropd10"></span>
+									<nav class="dropdown-menu dropdown-menu--content dropdown-menu--table" id="dropd10">
+										<ul>
+											<li><a href="dashboard__patient-profile.html">View Profile</a></li>
+											<li><a href="#">Contact</a></li>
+											<li><a href="#">Delete</a></li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div> <!-- End of Grid -->
+
+
+
+	</div>

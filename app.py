@@ -1,6 +1,10 @@
+
+
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
-from modules import get_timeslots, get_appointments, get_billings, get_patient, update_patient, get_doctor, view_doctor_appointments
-from modules import get_available_dates, get_prescriptions, add_patient, get_doctors, is_time_slot_available, view_doctor_prescriptions
+from jinja2 import FileSystemLoader
+
+from modules import get_timeslots, get_appointments, get_billings, get_patient, update_patient, get_doctor, view_doctor_appointments, append_to_file
+from modules import get_available_dates, get_patients, get_prescriptions, add_patient, get_doctors, is_time_slot_available, view_doctor_prescriptions
 from functools import wraps
 import csv
 import os
@@ -15,9 +19,11 @@ app.secret_key = 'your_secret_key_here'  # Change this in production
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
+
 # Define the path to the data directory
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 PATIENTS_CSV = os.path.join(DATA_DIR, 'patients.csv')
+
 DOCTORS_CSV = os.path.join(DATA_DIR, 'doctors.csv')
 APPOINTMENTS_CSV = os.path.join(DATA_DIR, 'appointments.csv')
 BILLING_CSV = os.path.join(DATA_DIR, 'billing.csv')
@@ -92,15 +98,27 @@ def login():
 
         password = request.form['password'].strip()
 
+        print(email, password)
         try:
-            user = get_patient(email, PATIENTS_CSV)
-            if user and user['Password'] == password:
+            user = get_patient(email, PATIENTS_CSV, DOCTORS_CSV)
+            print(user)
+            if user and user["role"] == "Patient" and user['Password'] == password:
                 session['user_email'] = email
                 session['role']= 'Patient'
                 session['Name']= user['Name']
                 logger.info(f"Successful login for user: {email}")
                 flash('Logged in successfully!')
                 return redirect(url_for('main_dashboard'))
+
+            elif user and user["role"] == "Doctor" and user["Password"] == password:
+                session["user_email"] = email
+                session["role"] = "Doctor"
+                session["Name"] = user["Name"]
+                session["doctor_id"] = user["doctor_id"]
+                logger.info(f"Successful login for user: {email}")
+                flash('Logged in successfully!')
+                return redirect(url_for('doctor/dashboard'))
+
             else:
                 logger.warning(f"Invalid credentials for email: {email}")
                 flash('Invalid email or password')
@@ -136,6 +154,8 @@ def main_dashboard():
                              time_slots=timeslots,
                              available_dates=get_available_dates())
     return redirect(url_for('logout'))
+
+
 
 
 @app.route('/account')
@@ -233,16 +253,39 @@ def doctor_login():
 
     return render_template('doctor_login.html')
 
+
+@app.route("/create_prescription", methods=["POST"])
+def create_prescription():
+    print(request.form.keys())
+    patient_name, patient_email, patient_phone = request.form.get('patient_details').split("##")
+    dob = request.form.get('date_of_birth')
+    phone = request.form.get('phone')
+    medication = request.form.get('medication')
+    period = request.form.get('dates')
+    doctor_name, doctor_id = request.form.get('doctor_details').split("##")
+    diagnosis = request.form.get("diagnosis")
+    notes = request.form.get('notes')
+    print(patient_email, patient_name, dob, phone, medication, period, diagnosis, doctor_name, notes)
+    append_to_file(PRESCRIPTIONS_CSV,f"{patient_email},{period},{medication},{diagnosis},{doctor_id}")
+    return "form submitted!"
+
+
 @app.route('/doctor/dashboard')
 @role_required('Doctor')
 def doctor_dashboard():
     if session:
-        appointments = view_doctor_appointments(session['doctor_id'], APPOINTMENTS_CSV)
-        prescriptions= view_doctor_prescriptions(session['doctor_id'], PRESCRIPTIONS_CSV)
+        doc_appointments = view_doctor_appointments(session['doctor_id'], APPOINTMENTS_CSV)
+        doc_prescriptions= view_doctor_prescriptions(session['doctor_id'], PRESCRIPTIONS_CSV)
+        patients = get_patients(PATIENTS_CSV)
+        doctors = get_doctors(DOCTORS_CSV)
+        print(doc_appointments)
         return render_template('doctor_dashboard.html',
-                             user=session,
-                             appointments=appointments,
-                             prescriptions=prescriptions)
+                               user=session,
+                               appointments=doc_appointments,
+                               prescriptions=doc_prescriptions,
+                               patients=patients,
+                               doctors=doctors
+                               )
     return redirect(url_for('logout'))
 
 app.run(debug=True)

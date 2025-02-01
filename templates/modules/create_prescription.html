@@ -1,0 +1,126 @@
+<!--templates/modules/create_prescription-->
+
+<form action="/create_prescription" method="POST">
+
+    <div class="modal modal--prescription">
+
+        <div class="modal__overlay modal__overlay--toggle"></div>
+        <div class="modal__wrapper modal-transition">
+
+            <div class="modal__body">
+                <div class="modal__header">
+                    <h2 class="modal__header-title">Make a prescription</h2>
+                    <div class="modal__close modal__overlay--toggle"><span></span></div>
+                </div>
+                <div class="modal__content">
+
+                    <div class="grid">
+                        <div class="grid__row grid__row--margin">
+                            <div class="grid__col grid__col--margin">
+                                <h3 class="grid__col-title">Patient Information</h3>
+                            </div>
+                        </div>
+                        <div class="grid__row grid__row--margin">
+                            <div class="grid__col grid__col--13 grid__col--margin">
+                                <label class="form__label">PATIENT NAME</label>
+                                <select class="custom-select" name="patient_details">
+                                    {% if patients %}
+                                    {% for patient in patients %}
+                                    <option value="{{patient.Name}}##{{patient.Email}}##{{patient.Phone}}">{{patient.Email}}</option>
+                                    {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div>
+                            <div class="grid__col grid__col--13 grid__col--margin">
+                                <label class="form__label">DATE OR BIRTH</label>
+                                <input type="text" class="form__input" placeholder="02/03/1983" name="date_of_birth"/>
+                            </div>
+                            <div class="grid__col grid__col--13 grid__col--margin">
+                                <label class="form__label">PHONE</label>
+                                <input type="text" name="phone" class="form__input" value=""/>
+                            </div>
+                        </div>
+                        <div class="grid__row  grid__row--margin">
+                            <div class="grid__col grid__col--margin">
+                                <h3 class="grid__col-title">Prescription Information</h3>
+                            </div>
+                        </div>
+                        <div class="grid__row grid__row--margin">
+                            <div class="grid__col grid__col--12 grid__col--margin">
+                                <label class="form__label">MEDICATION</label>
+                                <select class="custom-select" name="medication">
+                                    <option value="Acetaminophen">Acetaminophen</option>
+                                    <option value="Adderall">Adderall</option>
+                                    <option value="Alprazolam">Alprazolam</option>
+                                    <option value="Amitriptyline">Amitriptyline</option>
+                                    <option value="Amlodipine">Amlodipine</option>
+                                    <option value="Amoxicillin">Amoxicillin</option>
+                                    <option value="Ativan">Ativan</option>
+                                    <option value="Atorvastatin">Atorvastatin</option>
+                                    <option value="Azithromycin">Azithromycin</option>
+                                    <option value="Ciprofloxacin">Ciprofloxacin</option>
+                                    <option value="Citalopram">Citalopram</option>
+                                    <option value="Clindamycin">Clindamycin</option>
+                                    <option value="Clonazepam">Clonazepam</option>
+                                    <option value="Codeine">Codeine</option>
+                                    <option value="Cyclobenzaprine">Cyclobenzaprine</option>
+                                    <option value="Cymbalta">Cymbalta</option>
+                                    <option value="Doxycycline">Doxycycline</option>
+                                    <option value="Gabapentin">Gabapentin</option>
+                                    <option value="Hydrochlorothiazide">Hydrochlorothiazide</option>
+                                    <option value="Ibuprofen">Ibuprofen</option>
+                                </select>
+                            </div>
+                            <div class="grid__col grid__col--12 grid__col--margin">
+                                <label class="form__label">DIAGNOSIS</label>
+                                <select class="custom-select" name="diagnosis">
+                                    <option value="Red Eye">Red Eye</option>
+                                    <option value="Pink Eye">Pink Eye</option>
+                                    <option value="Dry Eye">Dry Eye</option>
+
+                                </select>
+                            </div>
+                            <div class="grid__col grid__col--12 grid__col--margin">
+                                <label class="form__label">PERIOD FOR MEDICATION</label>
+                                <input type="text" name="dates" class="form__input" value=""/>
+                            </div>
+                        </div>
+                        <div class="grid__row grid__row--margin">
+                            <div class="grid__col grid__col--margin">
+                                <h3 class="grid__col-title">Doctor Information</h3>
+                            </div>
+                        </div>
+                        <div class="grid__row grid__row--margin">
+                            <div class="grid__col grid__col--13 grid__col--margin">
+                                <label class="form__label">DOCTOR</label>
+                                <select class="custom-select" name="doctor_details">
+                                    {% if doctors %}
+                                        {% for doctor in doctors %}
+                                            <option value="{{doctor.Name}}##{{doctor.Doctor_ID}}">{{doctor.Name}}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div>
+                            <div class="grid__col grid__col--23 grid__col--margin">
+                                <label class="form__label">NOTES</label>
+                                <input name="notes" id="notes" class="form__input" type="text"/>
+                            </div>
+                        </div>
+                        <div class="grid__row grid__row--margin">
+                            <div class="grid__col grid__col--margin">
+                                <input type="submit" name="submit"
+                                       class="button button--submit button--inline button--blue-bg" id="submit"
+                                       value="SAVE PRESCRIPTION"/>
+                                <!--							<input type="submit" name="submit" class="button button&#45;&#45;submit button&#45;&#45;inline button&#45;&#45;blue-bg" id="submit" value="SAVE &amp; PRINT" />-->
+                            </div>
+                        </div>
+                    </div> <!-- End of Grid -->
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</form>

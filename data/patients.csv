@@ -8,5 +8,5 @@ Sarah Garcia,sarah.garcia@example.com,5558889999,"567 Cedar Lane","Apt 12","1988
 Robert Lee,robert.lee@example.com,5551112222,"890 Birch Street","","1975-12-10","Male",true,"Anthem","Secure2023!@#","US","WA","Seattle","98101"
 Amanda Martinez,amanda.m@example.com,5553334444,"123 Spruce Boulevard","","1993-04-25","Female",true,"Blue Shield","MedicalPass777$","US","AZ","Phoenix","85001"
 Thomas Anderson,thomas.a@example.com,5555556666,"456 Redwood Court","","1980-08-12","Male",true,"Wellcare","HealthCare2022%","US","GA","Atlanta","30301"
-Lisa Wong,lisa.wong@example.com,5557778888,"789 Sequoia Street","Apt 7A","1992-01-07","Female",false,"","StrongPass2023#","US","CA","San Diego","92101”
-Mary Wong,mary.wong@example.com,5557778228,"789 Sequoia Street","Apt 7A","1992-01-07","Female",false,"","StrongPass2025#","US","CA","San Diego","92101”
+Lisa Wong,lisa.wong@example.com,5557778888,"789 Sequoia Street","Apt 7A","1992-01-07","Female",false,"","1","US","CA","San Diego","92101”
+Mary Wong,mary.wong@example.com,5557778228,"789 Sequoia Street","Apt 7A","1992-01-07","Female",false,"","1","US","CA","San Diego","92101”

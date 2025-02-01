@@ -1,11 +1,25 @@
-Appointment_ID,Email,Date,Time,Doctor_ID,Status
-A001,john.doe@example.com,2025-01-15,10:00,D001,Passed
-A002,jane.smith@example.com,2025-01-16,14:00,D002,Pending
-A003,alice.johnson@example.com,2025-01-17,09:30,D003,Passed
-A004,bob.brown@example.com,2025-01-18,11:00,D004,Pending
-A005,charlie.green@example.com,2025-01-19,13:00,D001,Passed
-A006,daisy.white@example.com,2025-01-20,15:30,D002,Pending
-A007,evan.black@example.com,2025-01-21,08:00,D003,Passed
-A008,fiona.gray@example.com,2025-01-22,10:15,D004,Pending
-A009,george.blue@example.com,2025-01-23,16:45,D001,Passed
-A010,hannah.yellow@example.com,2025-01-24,09:00,D002,Pending
+Appointment_ID,Name,Email,Phone,Date,Time,Doctor_ID,Status
+A010,John Doe,john.doe@example.com,5551234567,2025-01-10,10:00 AM,1,Confirmed
+A011,Jane Smith,jane.smith@example.com,5559876543,2025-01-11,11:00 AM,1,Confirmed
+A012,Michael Johnson,michael.j@example.com,5552223333,2025-01-12,02:00 PM,1,Confirmed
+A013,Emily Brown,emily.brown@example.com,5554445555,2025-01-13,09:00 AM,2,Confirmed
+A014,David Wilson,david.wilson@example.com,5556667777,2025-01-14,03:00 PM,2,Confirmed
+A015,Sarah Garcia,sarah.garcia@example.com,5558889999,2025-01-15,01:00 PM,3,Confirmed
+A016,Robert Lee,robert.lee@example.com,5551112222,2025-01-16,11:30 AM,3,Confirmed
+A017,Amanda Martinez,amanda.m@example.com,5553334444,2025-01-17,04:00 PM,3,Confirmed
+A018,Thomas Anderson,thomas.a@example.com,5555556666,2025-01-18,10:00 AM,4,Confirmed
+A019,Lisa Wong,lisa.wong@example.com,5557778888,2025-01-19,02:00 PM,4,Confirmed
+A020,Mary Wong,mary.wong@example.com,5557778228,2025-01-20,11:00 AM,5,Confirmed
+A021,John Doe,john.doe@example.com,5551234567,2025-01-21,12:00 PM,5,Confirmed
+A022,Jane Smith,jane.smith@example.com,5559876543,2025-01-22,03:30 PM,5,Confirmed
+A023,Michael Johnson,michael.j@example.com,5552223333,2025-01-23,09:00 AM,5,Confirmed
+A024,David Wilson,david.wilson@example.com,5556667777,2025-01-24,10:00 AM,1,Confirmed
+A025,Sarah Garcia,sarah.garcia@example.com,5558889999,2025-01-25,11:00 AM,1,Confirmed
+A026,Robert Lee,robert.lee@example.com,5551112222,2025-01-26,09:00 AM,2,Confirmed
+A027,Amanda Martinez,amanda.m@example.com,5553334444,2025-01-27,02:00 PM,2,Confirmed
+A028,Thomas Anderson,thomas.a@example.com,5555556666,2025-01-28,01:00 PM,3,Confirmed
+A029,Lisa Wong,lisa.wong@example.com,5557778888,2025-01-29,10:30 AM,3,Confirmed
+A030,Mary Wong,mary.wong@example.com,5557778228,2025-01-30,11:00 AM,4,Confirmed
+A031,John Doe,john.doe@example.com,5551234567,2025-01-31,09:00 AM,4,Confirmed
+A032,Jane Smith,jane.smith@example.com,5559876543,2025-02-01,01:00 PM,5,Confirmed
+A033,Michael Johnson,michael.j@example.com,5552223333,2025-02-02,03:00 PM,5,Confirmed
