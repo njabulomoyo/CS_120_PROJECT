@@ -1,4 +1,6 @@
 import csv
+import json
+from random import randint
 
 def get_patient(email, user_csv, doctors_csv):
     try:
@@ -305,4 +307,43 @@ def append_to_file(file_path, text):
         print(f"Successfully appended to {file_path}")
     except Exception as e:
         print(f"An error occurred: {e}")
-#TODO add_billing, add_prescription, get_doctor_appointments, get_doctor prescriptions
+#TODO get_doctor_appointments, get_doctor prescriptions
+#WARN If the input is not in title case there will be an error
+#REFACTOR Use regex for checking or use a dropdown menu instead of typing on the frontend
+
+
+#text format should be CSV billing format: Email, Date, Details
+def add_billing(email, date, details, inventory="../data/medical_inventory.json", output_path="../data/billing.csv"):
+    try:
+        details = details.title()
+        data = open(inventory, "r")
+        inventory_data = json.load(data)
+
+        if details not in inventory_data:
+            return "Check Medication spelling"
+
+        dosage, quantity, price_per_unit = inventory_data[details]
+        insurance_amount = randint(1,50)
+        text_list =list(map(str, [email, date, details, price_per_unit, insurance_amount]))
+        
+        text = ",".join(text_list)
+
+        append_to_file(output_path, text)
+
+    except Exception as e:
+        return f"An error occurred: {e}"
+
+
+def add_prescription(email, date, drug, diagnosis, doctor_id, prescriptions_csv='../data/prescriptions.csv'):
+    try:
+        drug = drug.title()
+        diagnosis = diagnosis.title()
+
+        text_list = [email, date, drug, diagnosis, doctor_id]
+        text = ",".join(text_list)
+        append_to_file(prescriptions_csv, text)
+
+    except Exception as e:
+        return f"An error occured: {e}"
+
+
