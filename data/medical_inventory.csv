@@ -1,0 +1,25 @@
+Treatment,dosage,quantity_left,price_per_unit
+Eye lubricant drops,1-2 drops in the affected eye(s) as needed,28,10.99
+Lubricant Eye Drops,1-2 drops in the affected eye(s) as needed,28,10.99
+Decongestant eye drops,1-2 drops up to 4 times daily,15,12.49
+Antihistamine eye drops,1 drop in each eye twice daily (every 8-12 hours),25,15.75
+Steroid eye drops,"1-2 drops 2-4 times daily, taper as directed by a doctor",10,25.0
+Antibiotic eye drops,"1 drop every 2-4 hours, as prescribed",12,18.99
+Dual-focus contact lenses,As prescribed by an optometrist,4,35.0
+Pirenzepine,2% gel applied twice daily,8,45.5
+7-Methylxanthine (7-MX),400-600 mg orally daily,30,22.0
+Atropine eye drops,"0.01% once daily, typically in the evening",20,19.99
++20.00 glasses,As needed for vision correction,1,150.0
+Vuity (pilocarpine hydrochloride),1 drop in each eye once daily,13,45.0
+Qlosi (pilocarpine hydrochloride),1 drop in each eye once daily,10,40.0
+Cyclosporine (Restasis),"1 drop in each eye twice daily, 12 hours apart",30,65.0
+Cyclosporine Eye Drops,"1 drop in each eye twice daily, 12 hours apart",30,65.0
+Lifitegrast (Xiidra),"1 drop in each eye twice daily, 12 hours apart",20,58.0
+Tryvaya (Oyster Point),1 spray in each nostril twice daily,25,49.99
+Eysuvis,1-2 drops in each eye 4 times daily for up to 2 weeks,5,30.0
+Prednisolone Ophthalmic 1%,1-2 drops in the affected eye(s) 2-4 times daily,25,49.99
+Acetaminophen,500-1000 mg every 4-6 hours as needed,50,10.0
+Consultation,Not applicable,Infinite,160
+Eye Checkup,Not applicable,Infinite,120
+Prescription Review,Not applicable,Infinite,220
+Surgery,Not applicable,Infinite,5000
